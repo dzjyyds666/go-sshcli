@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xterm/xterm.dart';
 
 // 终端组件
 class TerminalWidget extends StatefulWidget {
@@ -10,22 +11,12 @@ class TerminalWidget extends StatefulWidget {
 }
 
 class _TerminalWidgetState extends State<TerminalWidget> {
-  final ScrollController _scrollController = ScrollController();
+  late final Terminal terminal;
 
   @override
   void initState() {
     super.initState();
-
-    // 在当前帧渲染完成后再执行
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToBottom();
-    });
-  }
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    }
+    _initTerminal();
   }
 
   @override
@@ -52,23 +43,17 @@ class _TerminalWidgetState extends State<TerminalWidget> {
           ),
         ),
       ),
-      child: ListView(
-        // 默认滚动到最下面,不是反向输出
-        controller: _scrollController,
-        children: [
-          for (var i = 0; i < 130; i++)
-            Container(
-              child: Text(
-                '$i',
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  color: Colors.white, // 确保文字可见
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-        ],
-      ),
+      child: TerminalView(terminal, backgroundOpacity: 0),
+    );
+  }
+
+  void _initTerminal() {
+    terminal = Terminal(
+      maxLines: 1000,
+      onOutput: (String data) {
+        print("You typed: $data");
+        terminal.write('You typed: $data');
+      },
     );
   }
 }
