@@ -17,6 +17,7 @@ class _TerminalWidgetState extends State<TerminalWidget> {
   void initState() {
     super.initState();
     _initTerminal();
+    // TODO 需要跟后端连调一下
   }
 
   @override
@@ -52,7 +53,7 @@ class _TerminalWidgetState extends State<TerminalWidget> {
       maxLines: 1000,
       onOutput: (String data) {
         print("You typed: $data");
-        terminal.write('You typed: $data');
+        terminal.write('\u001b[31m红色文本\u001b[0m');
       },
     );
   }
