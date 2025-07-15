@@ -7,6 +7,9 @@ class HomeLayoutWidget extends StatefulWidget {
   final Widget rightTopWidget;
   final Widget rightBottomWidget;
 
+  final void Function(double) updateLeftRatio;
+  final void Function(double) updateRightTopRatio;
+
   const HomeLayoutWidget({
     Key? key,
     required this.width,
@@ -14,6 +17,8 @@ class HomeLayoutWidget extends StatefulWidget {
     required this.leftWidget,
     required this.rightTopWidget,
     required this.rightBottomWidget,
+    required this.updateLeftRatio,
+    required this.updateRightTopRatio,
   });
 
   @override
@@ -43,6 +48,7 @@ class _HomeLayoutWidgetState extends State<HomeLayoutWidget> {
                 _leftRatio += details.delta.dx / widget.width;
                 _leftRatio = _leftRatio.clamp(0.2, 0.5);
               });
+              widget.updateLeftRatio(_leftRatio);
             },
             child: MouseRegion(
               cursor: SystemMouseCursors.resizeLeftRight,
@@ -67,6 +73,7 @@ class _HomeLayoutWidgetState extends State<HomeLayoutWidget> {
                       _rightTopRatio += details.delta.dy / widget.height;
                       _rightTopRatio = _rightTopRatio.clamp(0.5, 0.7);
                     });
+                    widget.updateRightTopRatio(_rightTopRatio);
                   },
                   child: MouseRegion(
                     cursor: SystemMouseCursors.resizeUpDown,

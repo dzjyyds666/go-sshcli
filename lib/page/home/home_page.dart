@@ -12,6 +12,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double _leftRatio = 0.2;
+  double _rightTopRatio = 0.7;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -20,10 +23,32 @@ class _HomePageState extends State<HomePage> {
       body: HomeLayoutWidget(
         width: width,
         height: height,
-        leftWidget: Container(decoration: BoxDecoration(color: Colors.red),child: Center(child: Text('leftSideBar',style: TextStyle(fontSize: 20.sp),))),
+        updateLeftRatio: _updateLeftRatio,
+        updateRightTopRatio: _updateRightTopRatio,
+        leftWidget: Container(
+          decoration: BoxDecoration(color: Colors.red),
+          child: Center(
+            child: Text('leftSideBar', style: TextStyle(fontSize: 20.sp)),
+          ),
+        ),
         rightTopWidget: TerminalWidget(),
-        rightBottomWidget: FilesTreeWidget(),
+        rightBottomWidget: FilesTreeWidget(
+          leftRatio: _leftRatio,
+          rightTopRatio: _rightTopRatio,
+        ),
       ),
     );
+  }
+
+  void _updateLeftRatio(double ratio) {
+    setState(() {
+      _leftRatio = ratio;
+    });
+  }
+
+  void _updateRightTopRatio(double ratio) {
+    setState(() {
+      _rightTopRatio = ratio;
+    });
   }
 }
