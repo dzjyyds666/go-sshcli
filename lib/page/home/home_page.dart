@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_sshcli/page/home/widget/files_tree.dart';
 import 'package:go_sshcli/page/home/widget/layout_widget.dart';
 import 'package:go_sshcli/page/home/widget/terminal_widget.dart';
 
@@ -21,10 +22,7 @@ class _HomePageState extends State<HomePage> {
         height: height,
         leftWidget: Container(decoration: BoxDecoration(color: Colors.red),child: Center(child: Text('leftSideBar',style: TextStyle(fontSize: 20.sp),))),
         rightTopWidget: TerminalWidget(),
-        rightBottomWidget: Container(
-          decoration: BoxDecoration(color: Colors.blue),
-          child: Center(child: Text('rightBottomWidget',style: TextStyle(fontSize: 20.sp),)),
-        ),
+        rightBottomWidget: FilesTreeWidget(),
       ),
     );
   }
